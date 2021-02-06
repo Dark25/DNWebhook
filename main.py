@@ -16,14 +16,16 @@ if __name__ == '__main__':
     while True:
         # statusNow = api.fetch_api()
         statusNow = network.check_port(IP)
-        statusLog = db.check_last_row()[1] if db.check_last_row() is not None else db.check_last_row()
-        db.insert_status((statusNow, ))
-        if statusNow == "Online" and statusLog == "Offline":
+        lastRow = db.check_last_row()
+        statusLog = lastRow[2] if lastRow is not None else lastRow
+        lastIp = lastRow[1] if lastRow is not None else lastRow
+        db.insert_status(statusNow, IP)
+        if statusNow == "Online" and statusLog == "Offline" and IP == lastIp:
             print("Server started!")
             embed = DiscordEmbed(title='Server Notice', description='Server Started', color=242424)
             webhook.add_embed(embed)
             response = webhook.execute()
-        elif statusNow == "Offline" and statusLog == "Online":
+        elif statusNow == "Offline" and statusLog == "Online" and IP == lastIp:
             print("Server maintenance")
             embed = DiscordEmbed(title='Server Notice', description='Server Maintenance', color=242424)
             webhook.add_embed(embed)

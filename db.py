@@ -9,6 +9,7 @@ def make_table():
         c.execute("""
         CREATE TABLE logs (
             id INTEGER PRIMARY KEY,
+            ip text,
             status text,
             date timestamp 
         )
@@ -40,12 +41,13 @@ def check_last_row():
     return lastStatus
 
 
-def insert_status(status):
+def insert_status(status, ip):
+    values = (ip, status)
     conn = None
     try:
         conn = sqlite3.connect('log.db')
         c = conn.cursor()
-        c.execute("INSERT INTO logs (status, date) VALUES (?, DATE('now')) ", status)
+        c.execute("INSERT INTO logs (ip, status, date) VALUES (?, ? , DATE('now')) ", values)
     finally:
         if conn:
             conn.commit()
