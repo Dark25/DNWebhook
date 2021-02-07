@@ -33,12 +33,12 @@ def check_last_row():
         c.execute("""
         SELECT * FROM logs ORDER BY id DESC LIMIT 1;
         """)
-        lastStatus = c.fetchone()
+        last_status = c.fetchone()
     finally:
         if conn:
             conn.close()
 
-    return lastStatus
+    return last_status
 
 
 def insert_status(status, ip):
