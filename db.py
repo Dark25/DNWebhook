@@ -41,8 +41,7 @@ def check_last_row():
     return last_status
 
 
-def insert_status(status, ip):
-    values = (ip, status)
+def insert_status(*values):
     conn = None
     try:
         conn = sqlite3.connect('log.db')

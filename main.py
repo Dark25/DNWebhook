@@ -17,6 +17,7 @@ if __name__ == '__main__':
     embedMaintenance = DiscordEmbed(title='Server Notice', description='Server Maintenance', color=242424)
 
     while True:
+        webhook.remove_embed(0) if len(webhook.embeds) > 0 else None
         statusNow = network.check_port(IP)
         lastRow = db.check_last_row()
         statusLog = lastRow[2] if lastRow is not None else lastRow
@@ -30,5 +31,6 @@ if __name__ == '__main__':
             print("Server maintenance")
             webhook.add_embed(embedMaintenance)
             response = webhook.execute()
-        db.insert_status(statusNow, IP)
+
+        db.insert_status(IP, statusNow)
         sleep(30)
