@@ -24,7 +24,7 @@ if __name__ == '__main__':
         lastIp = lastRow[1] if lastRow is not None else lastRow
 
         if statusNow == "Online" and statusLog == "Offline" and IP == lastIp:
-            print("Server started!")
+            print("Server started!!")
             webhook.add_embed(embedStart)
             response = webhook.execute()
         elif statusNow == "Offline" and statusLog == "Online" and IP == lastIp:
